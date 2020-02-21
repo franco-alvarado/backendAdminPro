@@ -1,0 +1,1 @@
+module.exports.SEED = 'HEMk{`%3A)9<{}WM#5(6N?$3e7P~|t|\|#@|¢fsaf';
