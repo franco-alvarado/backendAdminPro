@@ -58,8 +58,6 @@ app.get('/:tabla/any/:busqueda', middlewareTOKEN.verificaToken, (req, res, next)
     });
 });
 
-
-
 function buscarClubes(busqueda, regex) {
     return new Promise((resolve, reject) => {
         Club.find({ name: regex }, 'name img')

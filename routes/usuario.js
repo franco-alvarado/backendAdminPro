@@ -35,7 +35,7 @@ app.get('/', middlewareTOKEN.verificaToken, (req, res, next) => {
 // =====================================
 // CREAR UN NUEVO USUARIO  
 // =====================================
-app.post('/', middlewareTOKEN.verificaToken, (req, res, next) => {
+app.post('/', /* middlewareTOKEN.verificaToken, */ (req, res, next) => {
 
     var body = req.body;
 
