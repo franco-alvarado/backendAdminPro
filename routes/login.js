@@ -53,7 +53,7 @@ app.post('/google', async(req, res) => {
                 usuario.name = google_user.name;
                 usuario.email = google_user.email;
                 usuario.img = google_user.img;
-                usuario.password = 'google sign';
+                usuario.password = 'google-sign';
                 usuario.google = true;
                 usuario.save((err, usuarioBD) => {
                     if (err) {
@@ -65,16 +65,10 @@ app.post('/google', async(req, res) => {
             }
         });
     }
-
-    /* return res.status(200).json({
-        ok: true,
-        mensaje: 'google user',
-        usuario: google_user
-    }); */
 });
 
 // =====================
-// SIGN IN NORMAL
+// SIGN IN NORMAL 
 // =====================
 app.post('/', (req, res) => {
 

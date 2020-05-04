@@ -2,17 +2,17 @@
 var express = require('express');
 var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
+var cors = require('cors')
 
 // Inicializar variables
 var app = express();
 
-// Middleware CORS
-app.use(function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*"); // update to match the domain you will make the request from
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    res.header("Access-Control-Allow-Methods", "POST, GET, PUT, DELETE, OPTIONS");
-    next();
-});
+//CORS
+var corsOptions = {
+    origin: 'http://localhost:4200',
+    optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+}
+app.use(cors(corsOptions));
 
 // Body parser
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -45,7 +45,7 @@ app.use('/img', imgRoute);
 app.use('/translate', translateRoute);
 app.use('/', appRoute);
 
-// Mongo db
+// Mongo db nombre
 var db = mongoose.connection;
 db.openUri('mongodb://localhost:27017/adminPro', (err, res) => {
     if (err) throw err;

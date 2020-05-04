@@ -1,6 +1,7 @@
 var express = require('express');
 var bcrypt = require('bcryptjs');
 var middlewareTOKEN = require('../middlewares/jwt.js');
+var mail = require('../config/WelcomeMail');
 
 var app = express();
 
@@ -55,6 +56,10 @@ app.post('/', /* middlewareTOKEN.verificaToken, */ (req, res, next) => {
                 error: err
             });
         }
+
+        //welcome email
+        mail(body, 'Welcome to the new app');
+
         res.status(201).json({
             ok: true,
             usuario: usuarioGuardado,
