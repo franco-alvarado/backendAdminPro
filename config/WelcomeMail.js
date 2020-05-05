@@ -1,6 +1,6 @@
 const nodemailer = require('nodemailer');
 
-module.exports = (formulario, subject) => {
+module.exports = (formulario, userID, subject) => {
 
     let transporter = nodemailer.createTransport({
         host: 'smtp.gmail.com',
@@ -41,7 +41,7 @@ module.exports = (formulario, subject) => {
                 mso-table-rspace: 0pt;">
                     <tr>
                         <td bgcolor="#ffffff" align="center" valign="top" style="padding: 40px 20px 20px 20px; border-radius: 4px 4px 0px 0px; color: #111111; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 48px; font-weight: 400; letter-spacing: 4px; line-height: 48px;">
-                            <h1 style="font-size: 48px; font-weight: 400; margin: 2;">Welcome!</h1> <img src="https://drive.google.com/open?id=14AotdJiX56rvx4xgVqu2yxTIfSUOzZ0n" width="125" height="120" style="display: block; border: 0px;border: 0;
+                            <h1 style="font-size: 48px; font-weight: 400; margin: 2;">Welcome!</h1> <img src="https://img.icons8.com/clouds/100/000000/sad.png" width="125" height="120" style="display: block; border: 0px;border: 0;
                             height: auto;
                             line-height: 100%;
                             outline: none;
@@ -59,7 +59,7 @@ module.exports = (formulario, subject) => {
                     <tr>
                         <td bgcolor="#ffffff" align="left" style="padding: 20px 30px 40px 30px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;mso-table-lspace: 0pt;
                         mso-table-rspace: 0pt;">
-                            <p style="margin: 0;">Welcome frankly, as APP we want to welcome you to the new experience of being able to manage your accounting. <br><br> We are only one step away from being able to validate your account and that you can have full access
+                            <p style="margin: 0;">Welcome ${formulario.name}, as APP we want to welcome you to the new experience of being able to manage your accounting. <br><br> We are only one step away from being able to validate your account and that you can have full access
                                 to the system.</p>
                         </td>
                     </tr>
@@ -73,7 +73,7 @@ module.exports = (formulario, subject) => {
                                     mso-table-rspace: 0pt;">
                                         <table border="0" cellspacing="0" cellpadding="0" style="border-collapse: collapse !important;">
                                             <tr>
-                                                <td align="center" style="border-radius: 3px;" bgcolor="#87CEFA"><a href="#" target="_blank" style="font-size: 20px; font-family: Helvetica, Arial, sans-serif; color: #ffffff; text-decoration: none; color: #ffffff; text-decoration: none; padding: 15px 25px; border-radius: 2px; border: 1px solid #87CEFA; display: inline-block;">Activate Account</a></td>
+                                                <td align="center" style="border-radius: 3px;" bgcolor="#87CEFA"><a href="http://localhost:4200/#/activate/${userID}" target="_blank" style="font-size: 20px; font-family: Helvetica, Arial, sans-serif; color: #ffffff; text-decoration: none; color: #ffffff; text-decoration: none; padding: 15px 25px; border-radius: 2px; border: 1px solid #87CEFA; display: inline-block;">Activate Account</a></td>
                                             </tr>
                                         </table>
                                     </td>
@@ -85,10 +85,10 @@ module.exports = (formulario, subject) => {
                     <tr>
                         <td bgcolor="#FFECD1" align="left" style="padding: 30px 30px 30px 30px; border-radius: 4px 4px 4px 4px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;mso-table-lspace: 0pt;
                         mso-table-rspace: 0pt;">
-                            <p style="margin: 0;">Account details: </p>
+                            <p style="margin: 0;">See account details: </p>
                             <p>
                                 <strong>Name: </strong><span>${formulario.name}</span> <br>
-                                <strong>Email: </strong><span>${formulario.email}</span>
+                                <strong>Email: </strong><span>${formulario.email}</span> 
                             </p>
                         </td>
                     </tr>

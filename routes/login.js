@@ -11,63 +11,6 @@ var app = express();
 var Usuario = require('../models/usuario'); /* users es el nombre de la collection */
 
 // =====================
-// GOOGLE SIGN IN
-// =====================
-const { OAuth2Client } = require('google-auth-library');
-const client = new OAuth2Client(GOOGLE_ID);
-// Verifica token GOOGLE
-async function verify(token) {
-    const ticket = await client.verifyIdToken({
-        idToken: token,
-        audience: GOOGLE_ID
-    });
-    const payload = ticket.getPayload();
-    return {
-        name: payload.name,
-        email: payload.email,
-        img: payload.picture,
-        google: true
-    };
-}
-app.post('/google', async(req, res) => {
-    let token = req.body.token;
-    let google_user = await verify(token)
-        .catch(e => {
-            return error403('Token no válido!', res);
-        });
-    if (google_user) {
-        Usuario.findOne({ email: google_user.email }, (err, usuarioBD) => {
-            if (err) {
-                return error500('Error al buscar usuario', err, res);
-            }
-            if (usuarioBD) {
-                if (!usuarioBD.google) {
-                    return error400('Debe usar su autenticación normal', res);
-                } else {
-                    // CREAR TOKEN && RESPUESTA
-                    crearTokenRespuesta(SEED, usuarioBD, res);
-                }
-            } else {
-                // Usuario no existe en la BD
-                let usuario = new Usuario();
-                usuario.name = google_user.name;
-                usuario.email = google_user.email;
-                usuario.img = google_user.img;
-                usuario.password = 'google-sign';
-                usuario.google = true;
-                usuario.save((err, usuarioBD) => {
-                    if (err) {
-                        return error500('Error al guardar usuario: ', err, res);
-                    }
-                    // CREAR TOKEN && RESPUESTA
-                    crearTokenRespuesta(SEED, usuarioBD, res);
-                });
-            }
-        });
-    }
-});
-
-// =====================
 // SIGN IN NORMAL 
 // =====================
 app.post('/', (req, res) => {
@@ -84,6 +27,9 @@ app.post('/', (req, res) => {
         // Contraseña incorrecta
         if (!bcrypt.compareSync(body.password, usuarioBD.password)) {
             return error400('Credenciales incorrectas', res);
+        }
+        if (!usuarioBD.active) {
+            return error400('Cuenta no activada', res);
         }
         // Cambio de contraseña, por seguridad
         usuarioBD.password = ':)';
